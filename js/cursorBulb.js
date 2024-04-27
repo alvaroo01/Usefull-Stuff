@@ -1,0 +1,52 @@
+const coords = {x: 0 , y: 0}
+const circles = document.querySelectorAll(".circle");
+
+//Use https://www.learnui.design/tools/gradient-generator.html do choose color gradient
+const gradientColors = ["#1f005c", "#002e7d", "#005096", "#0071a7", "#3391b5", "#6ab0c2", "#9fced2", "#d3ebe8"];
+const factor = 0.40;
+
+//Give x and y variables to each circle.
+circles.forEach(function (circle, index) {
+    circle.x = 0;
+    circle.y = 0;
+
+    circle.style.backgroundColor = gradientColors[index % gradientColors.length]
+});
+
+//Event Listener
+window.addEventListener("mousemove", (event) => {
+    coords.x = event.clientX;
+    coords.y = event.clientY;
+    // console.log(`X${coords.x}:Y${coords.y}`)
+});
+
+
+const circleAnimation = () => {
+    
+    let x = coords.x;
+    let y = coords.y;
+    
+    circles.forEach(function(circle, index){
+        // Updates the position of each circle.
+        circle.style.left = x - 12 + "px"; 
+        circle.style.top = y - 12 + "px"; 
+
+        // The next circles are smaller. 
+        circle.style.scale = (circles.length - index) / 9;
+
+        circle.x = x;
+        circle.y = y;
+        
+        // Find out what the next circle is. If it is the last, go back to 0.
+        const nextCircle = circles[index + 1] || circles[0];
+        // Update its position.
+        x += (nextCircle.x - x) * factor;
+        y += (nextCircle.y - y) * factor;
+        
+    });
+
+    // By doing this, it doesnt bug when the mouse leaves the page
+    requestAnimationFrame(circleAnimation);
+}
+
+circleAnimation();
