@@ -15,8 +15,8 @@ circles.forEach(function (circle, index) {
 
 //Event Listener
 window.addEventListener("mousemove", (event) => {
-    coords.x = event.clientX;
-    coords.y = event.clientY;
+    coords.x = event.clientX + window.scrollX;
+    coords.y = event.clientY + window.scrollY;
     // console.log(`X${coords.x}:Y${coords.y}`)
 });
 
